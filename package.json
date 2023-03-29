@@ -1,0 +1,11 @@
+{
+  "name": "swapi",
+  "version": "1.0.0",
+  "description": "Star Wars App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Fernandez",
+  "license": "ISC"
+}

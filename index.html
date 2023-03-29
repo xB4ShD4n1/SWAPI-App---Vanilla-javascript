@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
+    <title>May the force be with you</title>
+  </head>
+  <body>
+    <main class="container-fluid">
+      <h1 class="title">A long time ago in a galaxy far, far away....</h1>
+      <nav aria-label="breadcrumb">
+        <ul id="nav">
+          <li><a href="#">people</a></li>
+          <li><a href="#">planets</a></li>
+          <li><a href="#">starships</a></li>
+          <li><a href="#">vehicles</a></li>
+          <li><a href="#">films</a></li>
+          <li><a href="#">species</a></li>
+        </ul>
+        <input
+          type="search"
+          id="search"
+          class="search"
+          placeholder="Search people"
+        />
+      </nav>
+      <div id="pagination"></div>
+      <div id="content" class="grid"></div>
+    </main>
+    <script src="/src/app.js"></script>
+  </body>
+</html>
