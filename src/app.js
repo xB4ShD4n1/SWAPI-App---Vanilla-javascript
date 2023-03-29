@@ -1,10 +1,17 @@
 const apiBaseUrl = "https://swapi.dev/api";
 const content = document.querySelector("#content");
 const pagination = document.querySelector("#pagination");
+const search = document.getElementById("search");
 let page = 1;
 
 document.querySelector("#nav").addEventListener("click", (e) => {
   getData(e.target.textContent.trim().toLowerCase(), page);
+});
+
+search.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    fetchSearch();
+  }
 });
 
 async function getData(list, page) {
@@ -134,28 +141,32 @@ function displayData(data, list, page) {
     });
   }
   content.innerHTML = elements;
+  setPagination(list, page, data);
+}
 
+function setPagination(list, page, data) {
+  pagination.innerHTML = "";
   pagination.innerHTML += `
-        <button 
-          id="prevBtn" 
-          onClick="getData('${list}', '${Number(page) - 1}')" 
-          href="#" 
-          role="button" 
-          class="outline"
-        >
-          Prev.
-        </button>
-        <button 
-          id="nextBtn" 
-          onClick="getData('${list}', '${Number(page) + 1}')" 
-          href="#" 
-          role="button" 
-          class="outline"
-        >
-          Next
-        </button>
-        <a class="results">${data.count} results</a>
-    `;
+    <button 
+      id="prevBtn" 
+      onClick="getData('${list}', '${Number(page) - 1}')" 
+      href="#" 
+      role="button" 
+      class="outline"
+    >
+      Prev.
+    </button>
+    <button 
+      id="nextBtn" 
+      onClick="getData('${list}', '${Number(page) + 1}')" 
+      href="#" 
+      role="button" 
+      class="outline"
+    >
+      Next
+    </button>
+    <a class="results">${data.count} results</a>
+  `;
 
   if (!data.next && !data.previous) {
     document.getElementById("nextBtn").disabled = true;
@@ -165,4 +176,48 @@ function displayData(data, list, page) {
   } else if (!data.next) {
     document.getElementById("nextBtn").disabled = true;
   }
+}
+
+function fetchSearch() {
+  const searchValue = search.value.trim().toLowerCase();
+  fetch(`${apiBaseUrl}/people/?search=${searchValue}`)
+    .then((response) => response.json())
+    .then((data) => {
+      content.innerHTML = "";
+      let elements = "";
+      data.results.forEach((item) => {
+        elements += `
+            <div class="wrapper">
+              <span><h6>${item.name}</h6></span>
+              <span>Height: </span>${item.height}<br>
+              <span>Mass: </span>${item.mass}<br>
+              <span>Hair color: </span>${item.hair_color}<br>
+              <span>Skin color: </span>${item.skin_color}<br>
+              <span>Eye color: </span>${item.eye_color}<br>
+              <span>Birth year: </span>${item.birth_year}<br>
+              <span>Gender: </span>${item.gender}<br>
+            </div>
+        `;
+      });
+      content.innerHTML = elements;
+      setSearchCount(data);
+    })
+    .catch((error) => {
+      console.log(error);
+      let errorInfo = error;
+      const errorHTML = `
+        <div class="error">
+          <div>Oops!!<div>
+          <div>Something go wrong: ${errorInfo}</div>
+        </div>
+      `;
+      content.innerHTML = errorHTML;
+    });
+}
+
+function setSearchCount(data) {
+  pagination.innerHTML = "";
+  pagination.innerHTML += `
+    <a class="results-search">${data.count} results</a>
+  `;
 }
