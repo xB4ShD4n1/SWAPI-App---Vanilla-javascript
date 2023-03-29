@@ -8,7 +8,6 @@ document.querySelector("#nav").addEventListener("click", (e) => {
 });
 
 async function getData(list, page) {
-  debugger;
   try {
     const response = await fetch(`${apiBaseUrl}/${list}/?page=${page}`);
     const data = await response.json();

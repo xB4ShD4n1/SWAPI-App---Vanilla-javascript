@@ -1,5 +1,5 @@
 body {
-  background-image: url("/assets/death-star.jpg");
+  background-image: url("../assets/death-star.jpg");
   background-size: cover;
 }
 
